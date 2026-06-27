@@ -9,8 +9,47 @@
     <meta name="keywords" content="Ghaniy Fadhil Altaf, Web Developer, Portfolio, SMKN 9 Semarang, PPLG">
     <meta name="author" content="Ghaniy Fadhil Altaf">
     <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://www.ghaniyfadhilaltaf.my.id/">
+    <meta name="theme-color" content="#08080d">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ghaniyfadhilaltaf.my.id/">
+    <meta property="og:title" content="Ghaniy Fadhil Altaf — Web Developer & IoT Enthusiast">
+    <meta property="og:description" content="Portfolio Ghaniy Fadhil Altaf — Web Developer & IoT Enthusiast dari Semarang. Lihat proyek dan hubungi saya.">
+    <meta property="og:image" content="https://www.ghaniyfadhilaltaf.my.id/fadhil.webp">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ghaniy Fadhil Altaf — Web Developer & IoT Enthusiast">
+    <meta name="twitter:description" content="Portfolio Web Developer & IoT Enthusiast dari Semarang, Indonesia.">
+    <meta name="twitter:image" content="https://www.ghaniyfadhilaltaf.my.id/fadhil.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="fadhil.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ghaniy Fadhil Altaf",
+        "url": "https://www.ghaniyfadhilaltaf.my.id/",
+        "image": "https://www.ghaniyfadhilaltaf.my.id/fadhil.webp",
+        "jobTitle": "Web Developer",
+        "description": "Pelajar SMKN 9 Semarang jurusan PPLG, Web Developer & IoT Enthusiast.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Semarang",
+            "addressRegion": "Jawa Tengah",
+            "addressCountry": "ID"
+        },
+        "email": "ghaniyfadhila@gmail.com",
+        "sameAs": [
+            "https://www.linkedin.com/in/ghaniy-fadhil-altaf-697b37414",
+            "https://github.com/ghaniyfadhila-source",
+            "https://www.instagram.com/jessaarrons"
+        ]
+    }
+    </script>
     <style>
         :root {
             /* Colors */
@@ -20,6 +59,8 @@
             --bg-card: rgba(20, 20, 32, 0.6);
             --bg-glass: rgba(255, 255, 255, 0.03);
             --bg-glass-hover: rgba(255, 255, 255, 0.06);
+            --bg-card-surface: rgba(14, 14, 22, 0.88);
+            --bg-card-surface-hover: rgba(18, 18, 28, 0.94);
 
             --text-primary: #f0f0f5;
             --text-secondary: #a0a0b8;
@@ -30,6 +71,10 @@
             --accent-tertiary: #a78bfa;
             --accent-glow: rgba(99, 102, 241, 0.25);
             --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+            --it-cyan: #22d3ee;
+            --it-green: #10b981;
+            --it-matrix: #00ff88;
+            --it-glow: rgba(34, 211, 238, 0.35);
 
             --emerald: #34d399;
             --emerald-glow: rgba(52, 211, 153, 0.2);
@@ -96,6 +141,160 @@
 
         .heading-font {
             font-family: 'Outfit', sans-serif;
+        }
+
+        /* Skip link — accessibility */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            z-index: 10000;
+            padding: 12px 20px;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+        }
+
+        /* ============================================
+           3D CANVAS — DESKTOP ONLY
+           ============================================ */
+        #scene-3d {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        #scene-3d.active {
+            opacity: 1;
+        }
+
+        .site-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* IT scanline overlay — desktop */
+        .it-scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(34, 211, 238, 0.015) 2px,
+                rgba(34, 211, 238, 0.015) 4px
+            );
+        }
+
+        html.is-desktop-3d .it-scanlines {
+            opacity: 1;
+        }
+
+        /* 3D card tilt container */
+        .tilt-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .tilt-card-inner {
+            height: 100%;
+            transition: box-shadow 0.3s var(--ease-out);
+        }
+
+        html.is-desktop-3d .tilt-card:hover .tilt-card-inner {
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(34, 211, 238, 0.08);
+        }
+
+        /* Hero 3D floating badge */
+        .hero-tech-orbit {
+            display: none;
+        }
+
+        html.is-desktop-3d .hero-tech-orbit {
+            display: block;
+            position: absolute;
+            inset: -40px;
+            z-index: 0;
+            border: 1px dashed rgba(34, 211, 238, 0.2);
+            border-radius: 50%;
+            animation: orbitSpin 25s linear infinite;
+        }
+
+        html.is-desktop-3d .hero-tech-orbit::before {
+            content: '{ }';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Outfit', monospace;
+            font-size: 0.7rem;
+            color: var(--it-cyan);
+            background: var(--bg-primary);
+            padding: 0 6px;
+        }
+
+        @keyframes orbitSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Deferred rendering — below fold sections */
+        .deferred-section {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
+        }
+
+        /* Mobile static hero fallback */
+        .mobile-hero-bg {
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(34, 211, 238, 0.08) 0%, transparent 60%);
+        }
+
+        html:not(.is-desktop-3d) .mobile-hero-bg {
+            display: block;
+        }
+
+        html.is-desktop-3d .skill-card:hover,
+        html.is-desktop-3d .project-card:hover,
+        html.is-desktop-3d .timeline-item:hover {
+            transform: none;
+        }
+
+        html.is-desktop-3d .skill-card:hover,
+        html.is-desktop-3d .project-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1;
+                transform: none;
+            }
         }
 
         /* ============================================
@@ -918,7 +1117,7 @@
             display: flex;
             gap: 20px;
             padding: 24px;
-            background: var(--bg-glass);
+            background: var(--bg-card-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-xl);
             transition: all 0.4s var(--ease-out);
@@ -940,7 +1139,7 @@
         }
 
         .timeline-item:hover {
-            background: var(--bg-glass-hover);
+            background: var(--bg-card-surface-hover);
             border-color: var(--border-hover);
             transform: translateX(4px);
         }
@@ -1016,7 +1215,7 @@
 
         .skill-card {
             padding: 32px 28px;
-            background: var(--bg-glass);
+            background: var(--bg-card-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-xl);
             transition: all 0.4s var(--ease-out);
@@ -1037,7 +1236,7 @@
         }
 
         .skill-card:hover {
-            background: var(--bg-glass-hover);
+            background: var(--bg-card-surface-hover);
             border-color: var(--border-hover);
             transform: translateY(-6px);
         }
@@ -1177,7 +1376,7 @@
         }
 
         .project-card {
-            background: var(--bg-glass);
+            background: var(--bg-card-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-xl);
             overflow: hidden;
@@ -1188,6 +1387,7 @@
         }
 
         .project-card:hover {
+            background: var(--bg-card-surface-hover);
             border-color: var(--border-hover);
             transform: translateY(-6px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
@@ -1353,14 +1553,14 @@
             align-items: center;
             gap: 16px;
             padding: 16px 20px;
-            background: var(--bg-glass);
+            background: var(--bg-card-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             transition: all 0.3s var(--ease-out);
         }
 
         .contact-item:hover {
-            background: var(--bg-glass-hover);
+            background: var(--bg-card-surface-hover);
             border-color: var(--border-hover);
             transform: translateX(4px);
         }
@@ -1426,11 +1626,10 @@
 
         /* Contact Card */
         .contact-card {
-            background: var(--bg-glass);
+            background: var(--bg-card-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-2xl);
             padding: 36px;
-            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             gap: 24px;
@@ -1632,6 +1831,22 @@
         /* ============================================
            RESPONSIVE
            ============================================ */
+        @media (max-width: 1023px) {
+            .cursor-glow,
+            #scene-3d,
+            .it-scanlines {
+                display: none !important;
+            }
+
+            .particles {
+                display: none;
+            }
+
+            .hero-bg-gradient {
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 1024px) {
             .skills-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1754,12 +1969,19 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <!-- 3D Scene — desktop only (loaded via JS) -->
+    <canvas id="scene-3d" aria-hidden="true"></canvas>
+    <div class="it-scanlines" aria-hidden="true"></div>
+
     <!-- Noise Texture Overlay -->
     <div class="noise-overlay" aria-hidden="true"></div>
 
     <!-- Cursor Glow -->
     <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
+    <div class="site-content">
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -1803,7 +2025,9 @@
     </div>
 
     <!-- Hero Section -->
+    <main id="main-content">
     <section class="hero" id="hero">
+        <div class="mobile-hero-bg" aria-hidden="true"></div>
         <div class="hero-bg-gradient" aria-hidden="true"></div>
         <div class="particles" id="particles" aria-hidden="true"></div>
         <div class="hero-grid" aria-hidden="true"></div>
@@ -1839,16 +2063,16 @@
                     </div>
 
                     <div class="hero-socials hero-enter hero-enter-6">
-                        <a href="https://www.linkedin.com/in/ghaniy-fadhil-altaf-697b37414?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/in/ghaniy-fadhil-altaf-697b37414?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="https://github.com/ghaniyfadhila-source" target="_blank" class="social-link" aria-label="GitHub">
+                        <a href="https://github.com/ghaniyfadhila-source" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://www.instagram.com/jessaarrons?igsh=bTBjaXo2NW56czJz" target="_blank" class="social-link" aria-label="Instagram">
+                        <a href="https://www.instagram.com/jessaarrons?igsh=bTBjaXo2NW56czJz" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://wa.me/6283103552129" target="_blank" class="social-link whatsapp" aria-label="WhatsApp">
+                        <a href="https://wa.me/6283103552129" target="_blank" rel="noopener noreferrer" class="social-link whatsapp" aria-label="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -1856,10 +2080,11 @@
 
                 <div class="hero-image-wrapper hero-enter hero-enter-7">
                     <div class="hero-image-container">
+                        <div class="hero-tech-orbit" aria-hidden="true"></div>
                         <div class="hero-image-glow" aria-hidden="true"></div>
                         <div class="hero-image-deco hero-image-deco-1" aria-hidden="true"></div>
                         <div class="hero-image-deco hero-image-deco-2" aria-hidden="true"></div>
-                        <img src="fadhil.webp" alt="Ghaniy Fadhil Altaf — Web Developer" fetchpriority="high" class="hero-image">
+                        <img src="fadhil.webp" alt="Ghaniy Fadhil Altaf — Web Developer" fetchpriority="high" width="340" height="400" class="hero-image">
                         <div class="hero-status-badge">
                             <div class="status-icon">
                                 <i class="fas fa-check"></i>
@@ -1881,7 +2106,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about deferred-section" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text-content reveal-left">
@@ -1928,7 +2153,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="skills" id="skills">
+    <section class="skills deferred-section" id="skills">
         <div class="container">
             <div class="skills-header reveal">
                 <span class="section-label">Keahlian</span>
@@ -1938,7 +2163,8 @@
 
             <div class="skills-grid">
                 <!-- Frontend -->
-                <div class="skill-card frontend reveal-scale stagger-1">
+                <div class="skill-card frontend reveal-scale stagger-1 tilt-card">
+                    <div class="tilt-card-inner">
                     <div class="skill-card-icon">
                         <i class="fas fa-code"></i>
                     </div>
@@ -1957,10 +2183,12 @@
                             <span>React / Next.js</span>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Backend -->
-                <div class="skill-card backend reveal-scale stagger-2">
+                <div class="skill-card backend reveal-scale stagger-2 tilt-card">
+                    <div class="tilt-card-inner">
                     <div class="skill-card-icon">
                         <i class="fas fa-server"></i>
                     </div>
@@ -1979,10 +2207,12 @@
                             <span>Python</span>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Database -->
-                <div class="skill-card database reveal-scale stagger-3">
+                <div class="skill-card database reveal-scale stagger-3 tilt-card">
+                    <div class="tilt-card-inner">
                     <div class="skill-card-icon">
                         <i class="fas fa-database"></i>
                     </div>
@@ -2001,10 +2231,12 @@
                             <span>MongoDB</span>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- Tools -->
-                <div class="skill-card tools reveal-scale stagger-4">
+                <div class="skill-card tools reveal-scale stagger-4 tilt-card">
+                    <div class="tilt-card-inner">
                     <div class="skill-card-icon">
                         <i class="fas fa-tools"></i>
                     </div>
@@ -2027,13 +2259,14 @@
                             <span>Linux CLI</span>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section class="projects" id="projects">
+    <section class="projects deferred-section" id="projects">
         <div class="container">
             <div class="projects-header">
                 <div class="reveal-left">
@@ -2045,9 +2278,9 @@
 
             <div class="bento-grid">
                 <!-- Project 1 -->
-                <div class="project-card reveal-scale stagger-1">
+                <div class="project-card reveal-scale stagger-1 tilt-card">
                     <div class="project-card-image">
-                        <img src="siTaplan.webp" alt="Sistem Absensi Berbasis RFID" loading="lazy">
+                        <img src="siTaplan.webp" alt="Sistem Absensi Berbasis RFID" loading="lazy" width="400" height="200">
                     </div>
                     <div class="project-card-body">
                         <h3>Sistem Absensi Berbasis RFID</h3>
@@ -2057,7 +2290,7 @@
                             <span class="project-tag">HTML</span>
                             <span class="project-tag">CSS</span>
                         </div>
-                        <a href="https://si-taplan.vercel.app/" target="_blank" class="project-link">
+                        <a href="https://si-taplan.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Lihat Demo
                         </a>
@@ -2065,9 +2298,9 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="project-card reveal-scale stagger-2">
+                <div class="project-card reveal-scale stagger-2 tilt-card">
                     <div class="project-card-image">
-                        <img src="semarangbakery.webp" alt="Semarang Bakery" loading="lazy">
+                        <img src="semarangbakery.webp" alt="Semarang Bakery" loading="lazy" width="400" height="200">
                     </div>
                     <div class="project-card-body">
                         <h3>Semarang Bakery</h3>
@@ -2077,7 +2310,7 @@
                             <span class="project-tag">CSS</span>
                             <span class="project-tag">JavaScript</span>
                         </div>
-                        <a href="https://tokorotifadhil.vercel.app/" target="_blank" class="project-link">
+                        <a href="https://tokorotifadhil.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Lihat Demo
                         </a>
@@ -2085,9 +2318,9 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="project-card reveal-scale stagger-3">
+                <div class="project-card reveal-scale stagger-3 tilt-card">
                     <div class="project-card-image">
-                        <img src="semarangan.webp" alt="Website Semarangan" loading="lazy">
+                        <img src="semarangan.webp" alt="Website Semarangan" loading="lazy" width="400" height="200">
                     </div>
                     <div class="project-card-body">
                         <h3>Website Semarangan</h3>
@@ -2097,7 +2330,7 @@
                             <span class="project-tag">CSS</span>
                             <span class="project-tag">JavaScript</span>
                         </div>
-                        <a href="https://semarangan-omega.vercel.app/" target="_blank" class="project-link">
+                        <a href="https://semarangan-omega.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Lihat Demo
                         </a>
@@ -2105,9 +2338,9 @@
                 </div>
 
                 <!-- Project 4 -->
-                <div class="project-card reveal-scale stagger-4">
+                <div class="project-card reveal-scale stagger-4 tilt-card">
                     <div class="project-card-image">
-                        <img src="klinik.webp" alt="Website Klinik Dr. Alini" loading="lazy">
+                        <img src="klinik.webp" alt="Website Klinik Dr. Alini" loading="lazy" width="400" height="200">
                     </div>
                     <div class="project-card-body">
                         <h3>Website Klinik Dr. Alini</h3>
@@ -2117,7 +2350,7 @@
                             <span class="project-tag">CSS</span>
                             <span class="project-tag">JavaScript</span>
                         </div>
-                        <a href="https://klinik-dr-alini.vercel.app/" target="_blank" class="project-link">
+                        <a href="https://klinik-dr-alini.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Lihat Demo
                         </a>
@@ -2125,9 +2358,9 @@
                 </div>
 
                 <!-- Project 5 -->
-                <div class="project-card reveal-scale stagger-5">
+                <div class="project-card reveal-scale stagger-5 tilt-card">
                     <div class="project-card-image">
-                        <img src="mockUpWebsiteUmkm.webp" alt="Desain Mock Up Website UMKM" loading="lazy">
+                        <img src="mockUpWebsiteUmkm.webp" alt="Desain Mock Up Website UMKM" loading="lazy" width="400" height="200">
                     </div>
                     <div class="project-card-body">
                         <h3>Desain Mock Up Website UMKM</h3>
@@ -2135,7 +2368,7 @@
                         <div class="project-tags">
                             <span class="project-tag">Canva</span>
                         </div>
-                        <a href="https://canva.link/e9ynwrlzmyn22a1" target="_blank" class="project-link">
+                        <a href="https://canva.link/e9ynwrlzmyn22a1" target="_blank" rel="noopener noreferrer" class="project-link">
                             <i class="fas fa-external-link-alt"></i>
                             Lihat Demo
                         </a>
@@ -2146,7 +2379,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact deferred-section" id="contact">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info reveal-left">
@@ -2188,7 +2421,7 @@
                         </div>
                     </div>
 
-                    <a href="https://wa.me/6283103552129?text=Halo%20Ghaniy,%20saya%20ingin%20menghubungi%20Anda" target="_blank" class="btn-whatsapp">
+                    <a href="https://wa.me/6283103552129?text=Halo%20Ghaniy,%20saya%20ingin%20menghubungi%20Anda" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
                         <i class="fab fa-whatsapp"></i>
                         Chat via WhatsApp
                     </a>
@@ -2217,6 +2450,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -2224,14 +2458,15 @@
             <div class="footer-inner">
                 <p class="footer-copy">© 2026 Ghaniy Fadhil Altaf.</p>
                 <div class="footer-links">
-                    <a href="https://www.linkedin.com/in/ghaniy-fadhil-altaf-697b37414" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/ghaniyfadhila-source" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.instagram.com/jessaarrons" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/6283103552129" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/in/ghaniy-fadhil-altaf-697b37414" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/ghaniyfadhila-source" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/jessaarrons" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/6283103552129" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
     </footer>
+    </div><!-- .site-content -->
 
     <!-- Back to Top -->
     <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">
@@ -2239,6 +2474,215 @@
     </button>
 
     <script>
+        // ============================================
+        // DESKTOP 3D DETECTION
+        // ============================================
+        const isDesktop3D = window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches
+            && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (isDesktop3D) {
+            document.documentElement.classList.add('is-desktop-3d');
+        }
+
+        // ============================================
+        // THREE.JS PREMIUM 3D SCENE (desktop only)
+        // ============================================
+        let threeAnimId = null;
+
+        function loadThreeJS(callback) {
+            if (window.THREE) {
+                callback();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+            script.async = true;
+            script.onload = callback;
+            document.head.appendChild(script);
+        }
+
+        function initPremium3DScene() {
+            const canvas = document.getElementById('scene-3d');
+            if (!canvas || !window.THREE) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 0.5, 6);
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                alpha: true,
+                antialias: true,
+                powerPreference: 'high-performance'
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            canvas.classList.add('active');
+
+            // Tron-style grid floor
+            const grid = new THREE.GridHelper(24, 48, 0x22d3ee, 0x6366f1);
+            grid.position.y = -2.2;
+            grid.material.transparent = true;
+            grid.material.opacity = 0.12;
+            scene.add(grid);
+
+            // Wireframe torus knot — data node
+            const knot = new THREE.Mesh(
+                new THREE.TorusKnotGeometry(0.75, 0.22, 100, 16),
+                new THREE.MeshBasicMaterial({
+                    color: 0x6366f1,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.45
+                })
+            );
+            knot.position.set(2.2, 0.4, -1.5);
+            scene.add(knot);
+
+            // Icosahedron — network node
+            const ico = new THREE.Mesh(
+                new THREE.IcosahedronGeometry(0.55, 0),
+                new THREE.MeshBasicMaterial({
+                    color: 0x22d3ee,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.35
+                })
+            );
+            ico.position.set(-2.8, -0.2, -2);
+            scene.add(ico);
+
+            // Octahedron — server icon
+            const oct = new THREE.Mesh(
+                new THREE.OctahedronGeometry(0.35, 0),
+                new THREE.MeshBasicMaterial({
+                    color: 0x10b981,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.4
+                })
+            );
+            oct.position.set(0.5, 1.8, -3);
+            scene.add(oct);
+
+            // Particle field — data stream
+            const particleCount = 600;
+            const positions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 18;
+            }
+            const particleGeo = new THREE.BufferGeometry();
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particles = new THREE.Points(
+                particleGeo,
+                new THREE.PointsMaterial({
+                    color: 0x8b5cf6,
+                    size: 0.025,
+                    transparent: true,
+                    opacity: 0.55,
+                    sizeAttenuation: true
+                })
+            );
+            scene.add(particles);
+
+            // Connection lines between nodes
+            const linePoints = [];
+            const nodes = [knot.position, ico.position, oct.position];
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    linePoints.push(nodes[i].clone(), nodes[j].clone());
+                }
+            }
+            const lineGeo = new THREE.BufferGeometry().setFromPoints(linePoints);
+            const lines = new THREE.LineSegments(
+                lineGeo,
+                new THREE.LineBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.15 })
+            );
+            scene.add(lines);
+
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            let scrollFactor = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            }, { passive: true });
+
+            window.addEventListener('scroll', () => {
+                scrollFactor = window.pageYOffset * 0.0004;
+            }, { passive: true });
+
+            function animate() {
+                threeAnimId = requestAnimationFrame(animate);
+
+                knot.rotation.x += 0.004;
+                knot.rotation.y += 0.006;
+                ico.rotation.x -= 0.003;
+                ico.rotation.y += 0.005;
+                oct.rotation.z += 0.008;
+                particles.rotation.y += 0.0004;
+                grid.rotation.y = scrollFactor * 0.5;
+
+                targetX += (mouseX * 0.35 - targetX) * 0.04;
+                targetY += (-mouseY * 0.25 - targetY) * 0.04;
+                camera.position.x = targetX;
+                camera.position.y = 0.5 + targetY;
+                camera.lookAt(0, 0, 0);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, { passive: true });
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && threeAnimId) {
+                    cancelAnimationFrame(threeAnimId);
+                    threeAnimId = null;
+                } else if (!document.hidden && !threeAnimId) {
+                    animate();
+                }
+            });
+        }
+
+        if (isDesktop3D) {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => loadThreeJS(initPremium3DScene), { timeout: 2000 });
+            } else {
+                setTimeout(() => loadThreeJS(initPremium3DScene), 500);
+            }
+        }
+
+        // ============================================
+        // 3D CARD TILT (desktop only)
+        // ============================================
+        function initCardTilt() {
+            if (!isDesktop3D) return;
+
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+                    card.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-6px)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        initCardTilt();
+
         // ============================================
         // TYPING ANIMATION
         // ============================================
@@ -2283,41 +2727,39 @@
         typeWriter();
 
         // ============================================
-        // FLOATING PARTICLES
+        // FLOATING PARTICLES (desktop only, reduced)
         // ============================================
         const particlesContainer = document.getElementById('particles');
 
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
+        if (isDesktop3D && particlesContainer) {
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
 
-            const size = Math.random() * 3 + 1;
-            const left = Math.random() * 100;
-            const duration = Math.random() * 8 + 6;
-            const delay = Math.random() * 4;
-            const hue = Math.random() > 0.5 ? '239' : '270';
-            const alpha = Math.random() * 0.4 + 0.1;
+                const size = Math.random() * 3 + 1;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 8 + 6;
+                const delay = Math.random() * 4;
+                const hue = Math.random() > 0.5 ? '187' : '239';
+                const alpha = Math.random() * 0.4 + 0.1;
 
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = left + '%';
-            particle.style.background = `hsla(${hue}, 80%, 70%, ${alpha})`;
-            particle.style.animationDuration = duration + 's';
-            particle.style.animationDelay = delay + 's';
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = left + '%';
+                particle.style.background = `hsla(${hue}, 80%, 70%, ${alpha})`;
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = delay + 's';
 
-            particlesContainer.appendChild(particle);
+                particlesContainer.appendChild(particle);
 
-            // Remove after animation
-            setTimeout(() => {
-                particle.remove();
-            }, (duration + delay) * 1000);
+                setTimeout(() => particle.remove(), (duration + delay) * 1000);
+            }
+
+            for (let i = 0; i < 12; i++) {
+                setTimeout(createParticle, i * 400);
+            }
+            setInterval(createParticle, 1200);
         }
-
-        // Create particles periodically
-        for (let i = 0; i < 20; i++) {
-            setTimeout(createParticle, i * 300);
-        }
-        setInterval(createParticle, 800);
 
         // ============================================
         // NAVBAR SCROLL BEHAVIOR
@@ -2497,7 +2939,7 @@
         // ============================================
         const cursorGlow = document.getElementById('cursorGlow');
 
-        if (window.matchMedia('(pointer: fine)').matches) {
+        if (isDesktop3D && cursorGlow) {
             document.addEventListener('mousemove', (e) => {
                 cursorGlow.style.left = e.clientX + 'px';
                 cursorGlow.style.top = e.clientY + 'px';
